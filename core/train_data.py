@@ -27,7 +27,7 @@ def create_train_data():
             img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
             img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
         except Exception as e:
-            print("Bitner to stara kurwa!", str(e))
+            print("exception", str(e))
         training_data.append([np.array(img), np.array(label)])
     shuffle(training_data)
     np.save('train_data.npy', training_data)
