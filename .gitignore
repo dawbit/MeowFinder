@@ -1,2 +1,18 @@
+#ignore train and test images
 core/test/
 core/train/
+
+#ignore PyCharm files
+core/.idea/
+core/__pycache__/
+.idea/
+
+#ignore logs
+core/log/
+
+#ignore package files
+core/venv/
+
+#ignore result files
+# in future
+#
