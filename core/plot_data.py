@@ -2,14 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import neural_network1
 
-
 #-------IMPORTOWANIE TEGO NIE DZIALA, HGW--------#
-from neural_network1 import test_data
-
 
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
-IMG_SIZE = 125
+IMG_SIZE = 250
 LR = 1e-3
 MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 
@@ -17,14 +14,13 @@ MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 #-------IMPORTOWANIE TEGO NIE DZIALA, HGW--------#
 
 
-def plt_dat():
-    model = neural_network1.network1.model
+def plt_dat(test_data):
+    model = neural_network1.network1()
     d = test_data[0]
     img_data, img_num = d
 
     data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
     prediction = model.predict([data])[0]
-
 
     fig = plt.figure(figsize=(6, 6))
     ax = fig.add_subplot(111)
@@ -38,7 +34,7 @@ def plt_dat():
         img_num = data[1]
         img_data = data[0]
 
-        y = fig.add_subplot(4, 4, num + 1)
+        y = fig.add_subplot(32, 32, num + 1)
         orig = img_data
         data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
         model_out = model.predict([data])[0]
@@ -52,4 +48,5 @@ def plt_dat():
         plt.title(str_label)
         y.axes.get_xaxis().set_visible(False)
         y.axes.get_yaxis().set_visible(False)
+
     plt.show()

@@ -1,7 +1,7 @@
 #import matplotlib.pyplot as plt
 #import cv2
-#import numpy as np
-#import os
+import numpy as np
+import os
 #from random import shuffle
 #from tqdm import tqdm
 #import tensorflow as tf
@@ -15,18 +15,17 @@ import test_data
 import neural_network1
 import plot_data
 
-TRAIN_DIR = 'train'
-TEST_DIR = 'test'
-IMG_SIZE = 125
-LR = 1e-3
-MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
-
-# If dataset is not created:
-train_data = train_data.create_train_data()
-test_data = test_data.create_test_data()
-
-# If you have already created the dataset:
-
+if os.path.isfile('train_data.npy'):
+    train_data = np.load('train_data.npy')
+    if os.path.isfile('test_data.npy'):
+        test_data = np.load('test_data.npy')
+    else:
+        test_data = test_data.create_test_data()
+else:
+    print("Nie istnieje")
+    train_data = train_data.create_train_data()
+    test_data = test_data.create_test_data()
+    neural_network1.get_data(train_data, test_data)
 
 neural_network1.network1()
-plot_data.plt_dat()
+plot_data.plt_dat(test_data)
