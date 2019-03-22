@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
-IMG_SIZE = 250
+IMG_SIZE = 50
 LR = 1e-3
 MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 
@@ -22,9 +22,12 @@ def create_train_data():
     training_data = []
     for img in tqdm(os.listdir(TRAIN_DIR)):
         label = label_img(img)
-        path = os.path.join(TRAIN_DIR, img)
-        img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-        img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
+        try:
+            path = os.path.join(TRAIN_DIR, img)
+            img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+            img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
+        except Exception as e:
+            print("Bitner to stara kurwa!", str(e))
         training_data.append([np.array(img), np.array(label)])
     shuffle(training_data)
     np.save('train_data.npy', training_data)

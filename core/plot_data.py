@@ -6,7 +6,7 @@ import neural_network1
 
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
-IMG_SIZE = 250
+IMG_SIZE = 50
 LR = 1e-3
 MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 
@@ -29,12 +29,12 @@ def plt_dat(test_data):
 
     fig = plt.figure(figsize=(16, 12))
 
-    for num, data in enumerate(test_data[:16]):
+    for num, data in enumerate(test_data[:256]):
 
         img_num = data[1]
         img_data = data[0]
 
-        y = fig.add_subplot(32, 32, num + 1)
+        y = fig.add_subplot(16, 16, num + 1)
         orig = img_data
         data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
         model_out = model.predict([data])[0]

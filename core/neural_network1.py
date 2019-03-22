@@ -7,18 +7,19 @@ from tflearn.layers.estimator import regression
 
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
-IMG_SIZE = 250
+IMG_SIZE = 50
 LR = 1e-3
 MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 
-train = []
-test = []
-def get_data(train_data, test_data):
-    train = train_data[:-25000]
-    test = test_data[-25000:]
+
+# def get_data(train_data, test_data):
+    #train = train_data[:-3750]
+    #test = test_data[-2500:]
+
+    # return train, test
 
 
-def network1():
+def network1(train, test):
     global model
     X_train = np.array([i[0] for i in train]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)#oryginalna wersja#
     #X_train = np.array([i[0] for i in train]).reshape(-1, IMG_SIZE)#
@@ -32,16 +33,16 @@ def network1():
 
     convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
 
-    convnet = conv_2d(convnet, 32, 5, activation='relu')
+    convnet = conv_2d(convnet, 32, 5, activation='relu', trainable=True)
     convnet = max_pool_2d(convnet, 5)
 
-    convnet = conv_2d(convnet, 64, 5, activation='relu')
+    convnet = conv_2d(convnet, 64, 5, activation='relu', trainable=True)
     convnet = max_pool_2d(convnet, 5)
 
-    convnet = fully_connected(convnet, 1024, activation='relu')
+    convnet = fully_connected(convnet, 1024, activation='relu', trainable=True)
     convnet = dropout(convnet, 0.8)
 
-    convnet = fully_connected(convnet, 2, activation='softmax')
+    convnet = fully_connected(convnet, 2, activation='softmax', trainable=True)
     convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
 
     model = tflearn.DNN(convnet, tensorboard_dir='log', tensorboard_verbose=0)
@@ -54,25 +55,25 @@ def network1():
 
     convnet = input_data(shape=[None, IMG_SIZE, IMG_SIZE, 1], name='input')
 
-    convnet = conv_2d(convnet, 32, 5, activation='relu')
+    convnet = conv_2d(convnet, 32, 5, activation='relu', trainable=True)
     convnet = max_pool_2d(convnet, 5)
 
-    convnet = conv_2d(convnet, 64, 5, activation='relu')
+    convnet = conv_2d(convnet, 64, 5, activation='relu', trainable=True)
     convnet = max_pool_2d(convnet, 5)
 
-    convnet = conv_2d(convnet, 128, 5, activation='relu')
+    convnet = conv_2d(convnet, 128, 5, activation='relu', trainable=True)
     convnet = max_pool_2d(convnet, 5)
 
-    convnet = conv_2d(convnet, 64, 5, activation='relu')
+    convnet = conv_2d(convnet, 64, 5, activation='relu', trainable=True)
     convnet = max_pool_2d(convnet, 5)
 
-    convnet = conv_2d(convnet, 32, 5, activation='relu')
+    convnet = conv_2d(convnet, 32, 5, activation='relu', trainable=True)
     convnet = max_pool_2d(convnet, 5)
 
-    convnet = fully_connected(convnet, 1024, activation='relu')
+    convnet = fully_connected(convnet, 1024, activation='relu', trainable=True)
     convnet = dropout(convnet, 0.8)
 
-    convnet = fully_connected(convnet, 2, activation='softmax')
+    convnet = fully_connected(convnet, 2, activation='softmax', trainable=True)
     convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
 
     model = tflearn.DNN(convnet, tensorboard_dir='log', tensorboard_verbose=0)

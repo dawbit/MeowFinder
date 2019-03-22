@@ -25,7 +25,7 @@ else:
     print("Nie istnieje")
     train_data = train_data.create_train_data()
     test_data = test_data.create_test_data()
-    neural_network1.get_data(train_data, test_data)
+    # train, test = neural_network1.get_data(train_data, test_data)
 
-neural_network1.network1()
+neural_network1.network1(train_data, test_data)
 plot_data.plt_dat(test_data)
