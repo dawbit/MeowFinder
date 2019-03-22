@@ -1,39 +1,55 @@
-import cv2
+import matplotlib.pyplot as plt
 import numpy as np
-import os
-from random import shuffle
-from tqdm import tqdm
-import tensorflow as tf
+import neural_network1
 
-import tflearn
-from tflearn.layers.conv import conv_2d, max_pool_2d
-from tflearn.layers.core import input_data, dropout, fully_connected
-from tflearn.layers.estimator import regression
 
-test_data = np.load('test_data.npy')
+#-------IMPORTOWANIE TEGO NIE DZIALA, HGW--------#
+from neural_network1 import test_data
 
-fig = plt.figure()
 
-for num, data in enumerate(test_data[:12]):
-    # cat: [1,0]
-    # dog: [0,1]
+TRAIN_DIR = 'train'
+TEST_DIR = 'test'
+IMG_SIZE = 125
+LR = 1e-3
+MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 
-    img_num = data[1]
-    img_data = data[0]
 
-    y = fig.add_subplot(3, 4, num + 1)
-    orig = img_data
+#-------IMPORTOWANIE TEGO NIE DZIALA, HGW--------#
+
+
+def plt_dat():
+    model = neural_network1.network1.model
+    d = test_data[0]
+    img_data, img_num = d
+
     data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
-    # model_out = model.predict([data])[0]
-    model_out = model.predict([data])[0]
+    prediction = model.predict([data])[0]
 
-    if np.argmax(model_out) == 1:
-        str_label = 'Dog'
-    else:
-        str_label = 'Cat'
 
-    y.imshow(orig, cmap='gray')
-    plt.title(str_label)
-    y.axes.get_xaxis().set_visible(False)
-    y.axes.get_yaxis().set_visible(False)
-plt.show()
+    fig = plt.figure(figsize=(6, 6))
+    ax = fig.add_subplot(111)
+    ax.imshow(img_data, cmap="gray")
+    print(f"cat: {prediction[0]}, dog: {prediction[1]}")
+
+    fig = plt.figure(figsize=(16, 12))
+
+    for num, data in enumerate(test_data[:16]):
+
+        img_num = data[1]
+        img_data = data[0]
+
+        y = fig.add_subplot(4, 4, num + 1)
+        orig = img_data
+        data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
+        model_out = model.predict([data])[0]
+
+        if np.argmax(model_out) == 1:
+            str_label = 'Dog'
+        else:
+            str_label = 'Cat'
+
+        y.imshow(orig, cmap='gray')
+        plt.title(str_label)
+        y.axes.get_xaxis().set_visible(False)
+        y.axes.get_yaxis().set_visible(False)
+    plt.show()

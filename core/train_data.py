@@ -3,12 +3,13 @@ import numpy as np
 import os
 from random import shuffle
 from tqdm import tqdm
-import tensorflow as tf
 
-import tflearn
-from tflearn.layers.conv import conv_2d, max_pool_2d
-from tflearn.layers.core import input_data, dropout, fully_connected
-from tflearn.layers.estimator import regression
+TRAIN_DIR = 'train'
+TEST_DIR = 'test'
+IMG_SIZE = 125
+LR = 1e-3
+MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
+
 
 def label_img(image_name):
     """ Create an one-hot encoded vector from image name """
