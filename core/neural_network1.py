@@ -7,17 +7,19 @@ from tflearn.layers.estimator import regression
 
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
-IMG_SIZE = 125
+IMG_SIZE = 250
 LR = 1e-3
 MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 
-train_data = np.load('train_data.npy')
-test_data = np.load('test_data.npy')
+train = []
+test = []
+def get_data(train_data, test_data):
+    train = train_data[:-25000]
+    test = test_data[-25000:]
 
-train = train_data[:-5000]
-test = train_data[-5000:]
 
 def network1():
+    global model
     X_train = np.array([i[0] for i in train]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)#oryginalna wersja#
     #X_train = np.array([i[0] for i in train]).reshape(-1, IMG_SIZE)#
     y_train = [i[1] for i in train]
@@ -42,9 +44,9 @@ def network1():
     convnet = fully_connected(convnet, 2, activation='softmax')
     convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
 
-    network1.model = tflearn.DNN(convnet, tensorboard_dir='log', tensorboard_verbose=0)
+    model = tflearn.DNN(convnet, tensorboard_dir='log', tensorboard_verbose=0)
 
-    network1.model.fit({'input': X_train}, {'targets': y_train}, n_epoch=10,
+    model.fit({'input': X_train}, {'targets': y_train}, n_epoch=10,
               validation_set=({'input': X_test}, {'targets': y_test}),
               snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
@@ -73,12 +75,12 @@ def network1():
     convnet = fully_connected(convnet, 2, activation='softmax')
     convnet = regression(convnet, optimizer='adam', learning_rate=LR, loss='categorical_crossentropy', name='targets')
 
-    network1.model = tflearn.DNN(convnet, tensorboard_dir='log', tensorboard_verbose=0)
+    model = tflearn.DNN(convnet, tensorboard_dir='log', tensorboard_verbose=0)
 
-    network1.model.fit({'input': X_train}, {'targets': y_train}, n_epoch=10,
+    model.fit({'input': X_train}, {'targets': y_train}, n_epoch=10,
               validation_set=({'input': X_test}, {'targets': y_test}),
               snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
     #------ tej linijki na dole nie miales w pliku, ale byla w notatniku z jupitera------#
-    network1.model.save(MODEL_NAME)
+    model.save(MODEL_NAME)
 
-    #return network1.model#
+    return model
