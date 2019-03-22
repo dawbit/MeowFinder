@@ -19,7 +19,7 @@ def create_test_data():
             img_data = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
             img_data = cv2.resize(img_data, (IMG_SIZE, IMG_SIZE))
         except Exception as e:
-            print("Bitner to stara kurwa!", str(e))
+            print("exception", str(e))
         testing_data.append([np.array(img_data), img_num])
 
     shuffle(testing_data)
