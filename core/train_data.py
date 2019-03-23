@@ -6,16 +6,19 @@ from tqdm import tqdm
 
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
-IMG_SIZE = 250
+IMG_SIZE = 150
 LR = 1e-3
 MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 
 
 def label_img(image_name):
     """ Create an one-hot encoded vector from image name """
-    word_label = image_name.split('.')[0]
-    if word_label == 'cat': return np.array([1, 0])
-    elif word_label == 'dog': return np.array([0, 1])
+    # word_label = image_name.split('.')[0]  # not used anywhere
+    #if word_label == 'cat': return np.array([1, 0])
+    if 'cat' in image_name: return np.array([1, 0])
+    #elif word_label == 'dog': return np.array([0, 1])
+    elif 'dog' in image_name: return np.array([0, 1])
+    else: exit(10)
 
 
 def create_train_data():

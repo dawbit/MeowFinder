@@ -20,12 +20,11 @@ if os.path.isfile('train_data.npy'):
     if os.path.isfile('test_data.npy'):
         test_data = np.load('test_data.npy')
     else:
-        test_data = test_data.create_test_data()
+        test_data.create_test_data()
 else:
     print("Nie istnieje")
     train_data = train_data.create_train_data()
     test_data = test_data.create_test_data()
-    neural_network1.get_data(train_data, test_data)
 
-neural_network1.network1()
-plot_data.plt_dat(test_data)
+model = neural_network1.network1(train_data, test_data)
+plot_data.plt_dat(model, test_data)
