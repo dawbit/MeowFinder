@@ -31,4 +31,4 @@ def create_train_data():
         training_data.append([np.array(img), np.array(label)])
     shuffle(training_data)
     np.save('train_data.npy', training_data)
-    return training_data
+    return training_data, len(tqdm(os.listdir(TRAIN_DIR)))

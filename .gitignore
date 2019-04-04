@@ -14,5 +14,8 @@ core/log/
 core/venv/
 
 #ignore result files
-# in future
-#
+core/checkpoint
+core/meowfinder-0.001-basic.data-00000-of-00001
+*.index
+*.meta
+*.npy

@@ -20,19 +20,20 @@ print(tf.test.gpu_device_name())
 #    return train, test
 
 
-def network1(train, test):
+def network1(train, test, train_amount):
+    train_amount = int(train_amount*2/3)
     global model
-
     tflearn.init_graph(num_cores=12, gpu_memory_fraction=1, soft_placement=True)
 
-    X_train = np.array([i[0] for i in train]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)#oryginalna wersja#
+    X_train = np.array([i[0] for i in train[:train_amount]]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)  #oryginalna wersja#
     #X_train = np.array([i[0] for i in train]).reshape(-1, IMG_SIZE)#
-    y_train = [i[1] for i in train]
+    y_train = [i[1] for i in train[:train_amount]]
 
     # validation_set (y_test powinno byc wymiaru 2D)
     # X_test = np.array([i[0] for i in test]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)#oryginalna wersja#
+    X_validation = np.array([i[0] for i in train[train_amount:]]).reshape(-1, IMG_SIZE, IMG_SIZE, 1)#oryginalna wersja#
     #X_test = np.array([i[0] for i in test]).reshape(-1, IMG_SIZE)#
-    # y_test = [i[1] for i in test]
+    y_validation = [i[1] for i in train[train_amount:]]
 
     tf.reset_default_graph()
 
@@ -56,6 +57,7 @@ def network1(train, test):
     #           validation_set=({'input': X_test}, {'targets': y_test}),
     #          snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
     model.fit({'input': X_train}, {'targets': y_train}, n_epoch=10,
+              validation_set=({'input': X_validation}, {'targets': y_validation}),
               snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
     tf.reset_default_graph()
@@ -90,6 +92,7 @@ def network1(train, test):
     #           snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
     model.fit({'input': X_train}, {'targets': y_train}, n_epoch=10,
+              validation_set=({'input': X_validation}, {'targets': y_validation}),
               snapshot_step=500, show_metric=True, run_id=MODEL_NAME)
 
     #------ tej linijki na dole nie miales w pliku, ale byla w notatniku z jupitera------#
