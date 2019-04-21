@@ -1,16 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
-#-------IMPORTOWANIE TEGO NIE DZIALA, HGW--------#
-
-TRAIN_DIR = 'train'
-TEST_DIR = 'test'
-IMG_SIZE = 150
-LR = 1e-3
-MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
-
-
-#-------IMPORTOWANIE TEGO NIE DZIALA, HGW--------#
+import settings as s
 
 
 def plt_dat(model, test_data):
@@ -38,7 +28,7 @@ def plt_dat(model, test_data):
 
         y = fig.add_subplot(8, 8, num + 1)
         orig = img_data
-        data = img_data.reshape(IMG_SIZE, IMG_SIZE, 1)
+        data = img_data.reshape(s.IMG_SIZE, s.IMG_SIZE, 1)
         model_out = model.predict([data])[0]
 
         if np.argmax(model_out) == 1:
