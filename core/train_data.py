@@ -21,7 +21,10 @@ def create_train_data():
         label = label_img(img)
         path = os.path.join(s.TRAIN_DIR, img)
         img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-        img = cv2.Canny(img, 100, 200) # koniecznie do optymalizacji
+        kernel_sharpening = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
+        sharpened = cv2.filter2D(img, -1, kernel_sharpening)
+        blurred = cv2.GaussianBlur(sharpened, (3, 3), 0)
+        img = cv2.Laplacian(blurred, cv2.CV_64F, ksize=7)
         img = cv2.resize(img, (s.IMG_SIZE, s.IMG_SIZE))
         training_data.append([np.array(img), np.array(label)])
     shuffle(training_data)

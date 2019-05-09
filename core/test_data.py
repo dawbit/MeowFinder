@@ -11,8 +11,11 @@ def create_test_data():
     for img in tqdm(os.listdir(s.TEST_DIR)):
         path = os.path.join(s.TEST_DIR, img)
         img_num = img.split('.')[0]
-        img_data = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-        img_data = cv2.Canny(img_data, 100, 200) # koniecznie do optymalizacji
+        img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+        kernel_sharpening = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
+        sharpened = cv2.filter2D(img, -1, kernel_sharpening)
+        blurred = cv2.GaussianBlur(sharpened, (3, 3), 0)
+        img_data = cv2.Laplacian(blurred, cv2.CV_64F, ksize=7)
         img_data = cv2.resize(img_data, (s.IMG_SIZE, s.IMG_SIZE))
         testing_data.append([np.array(img_data), img_num])
 
