@@ -1,14 +1,14 @@
-#import matplotlib.pyplot as plt
-#import cv2
+# import matplotlib.pyplot as plt
+# import cv2
 import numpy as np
 import os
-#from random import shuffle
-#from tqdm import tqdm
-#import tensorflow as tf
-#import tflearn
-#from tflearn.layers.conv import conv_2d, max_pool_2d
-#from tflearn.layers.core import input_data, dropout, fully_connected
-#from tflearn.layers.estimator import regression
+# from random import shuffle
+# from tqdm import tqdm
+# import tensorflow as tf
+# import tflearn
+# from tflearn.layers.conv import conv_2d, max_pool_2d
+# from tflearn.layers.core import input_data, dropout, fully_connected
+# from tflearn.layers.estimator import regression
 
 import train_data
 import test_data

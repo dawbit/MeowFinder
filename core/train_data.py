@@ -7,12 +7,11 @@ import settings as s
 
 
 def label_img(image_name):
-    # word_label = image_name.split('.')[0]  # not used anywhere
-    #if word_label == 'cat': return np.array([1, 0])
-    if 'cat' in image_name: return np.array([1, 0])
-    #elif word_label == 'dog': return np.array([0, 1])
-    elif 'dog' in image_name: return np.array([0, 1])
-    else: exit(10)
+    for i in range(s.len_animals):
+        if s.animals[i] in image_name:
+            class_label = np.zeros(len(s.animals))
+            class_label[i] = 1
+            return class_label
 
 
 def create_train_data():
@@ -21,10 +20,6 @@ def create_train_data():
         label = label_img(img)
         path = os.path.join(s.TRAIN_DIR, img)
         img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-        kernel_sharpening = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
-        sharpened = cv2.filter2D(img, -1, kernel_sharpening)
-        blurred = cv2.GaussianBlur(sharpened, (3, 3), 0)
-        img = cv2.Laplacian(blurred, cv2.CV_64F, ksize=7)
         img = cv2.resize(img, (s.IMG_SIZE, s.IMG_SIZE))
         training_data.append([np.array(img), np.array(label)])
     shuffle(training_data)
