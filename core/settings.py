@@ -1,5 +1,6 @@
 TRAIN_DIR = 'train'
 TEST_DIR = 'test'
+VALIDATION_DIR = 'validation'
 IMG_SIZE = 150
 LR = 1e-3
 MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
@@ -7,5 +8,5 @@ MODEL_NAME = 'meowfinder-{}-{}'.format(LR, 'basic')
 animals = ['cat', 'dog', 'crab', 'rabbit', 'monkey', 'spider', 'wasp', 'shark', 'scorpion', 'elephant', 'snake',
            'turtle']
 
-num_animals = [0 for i in range(11)]
+num_animals = [0 for i in range(len(animals))]
 len_animals = len(animals)

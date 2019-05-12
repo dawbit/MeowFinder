@@ -13,11 +13,6 @@ def plt_dat(model, test_data):
 
         s.num_animals[np.argmax(prediction)] += 1
 
-        # fig = plt.figure(figsize=(6, 6))
-        # ax = fig.add_subplot(111)
-        # ax.imshow(img_data, cmap="gray")
-        # print(f"cat: {prediction[0]}, dog: {prediction[1]}")
-
     fig = plt.figure(figsize=(16, 12))
 
     for num, data in enumerate(test_data[:64]):

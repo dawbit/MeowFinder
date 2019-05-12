@@ -1,17 +1,8 @@
-# import matplotlib.pyplot as plt
-# import cv2
 import numpy as np
 import os
-# from random import shuffle
-# from tqdm import tqdm
-# import tensorflow as tf
-# import tflearn
-# from tflearn.layers.conv import conv_2d, max_pool_2d
-# from tflearn.layers.core import input_data, dropout, fully_connected
-# from tflearn.layers.estimator import regression
-
 import train_data
 import test_data
+import validation_data
 import neural_network1
 import plot_data
 
@@ -28,4 +19,5 @@ else:
     test_data = test_data.create_test_data()
 
 model = neural_network1.network1(train_data, test_data, train_amount)
+validation = validation_data.create_validation_data()
 plot_data.plt_dat(model, test_data)
