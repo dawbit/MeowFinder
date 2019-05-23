@@ -1,9 +1,49 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import settings as s
+import tflearn
+
+from tflearn.layers.conv import conv_2d, max_pool_2d
+from tflearn.layers.core import input_data, dropout, fully_connected
+from tflearn.layers.estimator import regression
 
 
-def plt_dat(model, test_data):
+# region NETWORK
+def cnn():
+    network = input_data(shape=[None, s.IMG_SIZE, s.IMG_SIZE, 1], name='input')
+
+    network = conv_2d(network, 32, 5, activation='relu', regularizer='L2')
+    network = max_pool_2d(network, 5)
+
+    network = conv_2d(network, 64, 5, activation='relu', regularizer='L2')
+    network = max_pool_2d(network, 5)
+
+    network = conv_2d(network, 128, 5, activation='relu', regularizer='L2')
+    network = max_pool_2d(network, 5)
+
+    network = conv_2d(network, 64, 5, activation='relu', regularizer='L2')
+    network = max_pool_2d(network, 5)
+
+    network = conv_2d(network, 32, 5, activation='relu', regularizer='L2')
+    network = max_pool_2d(network, 5)
+
+    network = fully_connected(network, 512, activation='relu', regularizer='L2')
+    network = dropout(network, 0.7)
+
+    network = fully_connected(network, 12, activation='softmax')
+
+    network = regression(network, optimizer='adam', loss='categorical_crossentropy', learning_rate=s.LR, name='targets')
+
+    model = tflearn.DNN(network, tensorboard_verbose=0, tensorboard_dir='log')
+
+    model.load(s.MODEL_NAME)
+
+    return model
+# endregion
+
+
+def plt_dat(test_data):
+    model = cnn()
     for num in range(len(test_data)):
         d = test_data[num]
         img_data, img_num = d
@@ -16,7 +56,6 @@ def plt_dat(model, test_data):
     fig = plt.figure(figsize=(16, 12))
 
     for num, data in enumerate(test_data[:64]):
-        # img_num = data[1] # not used anywhere
         img_data = data[0]
 
         y = fig.add_subplot(8, 8, num + 1)
