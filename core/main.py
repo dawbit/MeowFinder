@@ -22,45 +22,50 @@ import plot_data
 # model = neural_network1.network1(train_data, train_amount)
 # plot_data.plt_dat(model, test_data)
 
-class Switcher(object):
-    def decision(self, argument):
-        if argument.isnumeric() is False:
-            sys.exit(1)
+def decision(argument):
+    if argument.isnumeric() is False:
+        sys.exit(1)
 
-        if argument == "1": self.createModel()
-        elif argument == "2": self.makePredictions()
-        else: self.both()
+    if argument == "1":
+        createModel()
+    elif argument == "2":
+        makePredictions()
+    else:
+        both()
 
-    def createModel(self):
-        if os.path.isfile('train_data.npy'):
-            inp = input("Train data exist. Want to remove?")
-            if inp == "yes" or inp == "y" or inp == "true":
-                os.remove("train_data.npy")
-                tra_data = train_data.create_train_data()
-            else:
-                tra_data = np.load('train_data.npy')
-        else:
+
+def createModel():
+    if os.path.isfile('train_data.npy'):
+        inp = input("Train data exist. Want to remove?")
+        if inp == "yes" or inp == "y" or inp == "true":
+            os.remove("train_data.npy")
             tra_data = train_data.create_train_data()
-
-        train_amount = len(tra_data)
-        neural_network1.network1(tra_data, train_amount)
-
-    def makePredictions(self):
-        if os.path.isfile('test_data.npy'):
-            inp = input("Test data exist. Want to remove?")
-            if inp == "yes" or inp == "y" or inp == "true":
-                os.remove("test_data.npy")
-                tes_data = test_data.create_test_data()
-            else:
-                tes_data = np.load('test_data.npy')
         else:
+            tra_data = np.load('train_data.npy')
+    else:
+        tra_data = train_data.create_train_data()
+
+    train_amount = len(tra_data)
+    neural_network1.network1(tra_data, train_amount)
+
+
+def makePredictions():
+    if os.path.isfile('test_data.npy'):
+        inp = input("Test data exist. Want to remove?")
+        if inp == "yes" or inp == "y" or inp == "true":
+            os.remove("test_data.npy")
             tes_data = test_data.create_test_data()
+        else:
+            tes_data = np.load('test_data.npy')
+    else:
+        tes_data = test_data.create_test_data()
 
-        plot_data.plt_dat(tes_data)
+    plot_data.plt_dat(tes_data)
 
-    def both(self):
-        self.createModel()
-        self.makePredictions()
+
+def both():
+    createModel()
+    makePredictions()
 
 
 if __name__ == "__main__":
@@ -69,5 +74,4 @@ if __name__ == "__main__":
     print("3. Create a model and make preditions.")
     choice = input("Choice: ")
 
-    s = Switcher()
-    s.decision(choice)
+    decision(choice)
