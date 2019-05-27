@@ -12,8 +12,9 @@ tflearn.init_graph(num_cores=4, gpu_memory_fraction=0.5)
 
 # region NETWORK
 def cnn():
+    # region NETWORK
     img_prep = ImagePreprocessing()
-    img_prep.add_featurewise_zero_center(mean=[0.47938])
+    img_prep.add_featurewise_zero_center(mean=[0.4735053442384178])
 
     network = input_data(shape=[None, s.IMG_SIZE, s.IMG_SIZE, 1], name='input', data_preprocessing=img_prep)
 
@@ -60,19 +61,18 @@ def plt_dat(test_data):
 
         s.num_animals[np.argmax(prediction)] += 1
 
-    fig = plt.figure(figsize=(16, 12))
+    fig = plt.figure(figsize=(12, 8))
 
-    for num, data in enumerate(test_data[:64]):
+    for num, data in enumerate(test_data[:20]):
         img_data = data[0]
 
-        y = fig.add_subplot(8, 8, num + 1)
+        y = fig.add_subplot(4, 5, num + 1)
         orig = img_data
         data = img_data.reshape(s.IMG_SIZE, s.IMG_SIZE, 1)
         data = data / 255.0
 
         model_out = model.predict([data])[0]
-
-        str_label = s.animals[np.argmax(model_out)]
+        str_label = '{} {:.2f}%'.format(s.animals[np.argmax(model_out)], max(model_out)*100)
 
         y.imshow(orig, cmap='gray')
         plt.title(str_label)

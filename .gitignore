@@ -19,3 +19,6 @@ core/meowfinder-0.001-basic.data-00000-of-00001
 *.index
 *.meta
 *.npy
+
+#ignore model
+currentModel

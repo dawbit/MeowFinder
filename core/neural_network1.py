@@ -27,7 +27,7 @@ def network1(train, train_amount):
 
     # region NETWORK
     img_prep = ImagePreprocessing()
-    img_prep.add_featurewise_zero_center(mean=[0.47938])
+    img_prep.add_featurewise_zero_center(mean=[0.4735053442384178])
 
     network = input_data(shape=[None, s.IMG_SIZE, s.IMG_SIZE, 1], name='input', data_preprocessing=img_prep)
 
@@ -58,12 +58,12 @@ def network1(train, train_amount):
     # endregion
 
     # region TRAIN
-    model.fit(x_train, y_train, n_epoch=15,
+    model.fit(x_train, y_train, n_epoch=12,
               validation_set=({'input': x_validation}, {'targets': y_validation}),
               shuffle=True,
               snapshot_epoch=True,
               show_metric=True,
-              batch_size=100,
+              batch_size=64,
               run_id=s.MODEL_NAME)
     # endregion
 
