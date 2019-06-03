@@ -41,7 +41,7 @@ def cnn():
 
     network = regression(network, optimizer='adam', loss='categorical_crossentropy', learning_rate=s.LR, name='targets')
 
-    model = tflearn.DNN(network, tensorboard_verbose=0, tensorboard_dir='log', checkpoint_path='model.tfl.ckpt')
+    model = tflearn.DNN(network, tensorboard_verbose=0, tensorboard_dir='log')
 
     model.load(s.MODEL_NAME)
 

@@ -1,14 +1,17 @@
 import numpy as np
+import tensorflow as tf
 import tflearn
 from tflearn.layers.conv import conv_2d, max_pool_2d
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 from tflearn.data_preprocessing import ImagePreprocessing
 import settings as s
-from tflearn.data_utils import image_preloader
+import os
 
-
-tflearn.init_graph(num_cores=4, gpu_memory_fraction=0.5)
+# tflearn.init_graph(num_cores=4, gpu_memory_fraction=1)
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.Session(config=config)
 
 
 def network1(train, train_amount):
@@ -54,16 +57,20 @@ def network1(train, train_amount):
 
     network = regression(network, optimizer='adam', loss='categorical_crossentropy', learning_rate=s.LR, name='targets')
 
-    model = tflearn.DNN(network, tensorboard_verbose=0, tensorboard_dir='log', checkpoint_path='model.tfl.ckpt')
+    model = tflearn.DNN(network, tensorboard_verbose=0, tensorboard_dir='log')
     # endregion
 
-    # region TRAIN
+    if os.path.exists('{}.meta'.format(s.MODEL_NAME)):
+        model.load(s.MODEL_NAME)
+        print('Model loaded')
+
+    # region TRAIN1
     model.fit(x_train, y_train, n_epoch=12,
               validation_set=({'input': x_validation}, {'targets': y_validation}),
               shuffle=True,
               snapshot_epoch=True,
               show_metric=True,
-              batch_size=64,
+              batch_size=100,
               run_id=s.MODEL_NAME)
     # endregion
 
@@ -71,4 +78,5 @@ def network1(train, train_amount):
     model.save(s.MODEL_NAME)
     print('Network trained and saved as {0}'.format(s.MODEL_NAME))
     # endregion
+
 
