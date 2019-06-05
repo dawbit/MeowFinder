@@ -13,10 +13,10 @@ core/log/
 #ignore package files
 core/venv/
 
-#ignore result files
+#ignore model
+currentModel
 *.index
 *.meta
 *.npy
-
-#ignore model
-currentModel
+checkpoint
+*.tfl.*
