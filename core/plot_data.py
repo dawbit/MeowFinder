@@ -8,7 +8,7 @@ from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 from tflearn.data_preprocessing import ImagePreprocessing
 
-tflearn.init_graph(num_cores=4, gpu_memory_fraction=0.5)
+# tflearn.init_graph(num_cores=4, gpu_memory_fraction=0.5)
 
 # region NETWORK
 def cnn():
