@@ -1,3 +1,2 @@
-# show the most important programming language
-*.jpg
-*.tex
+*.py linguist-detectable=true
+*.tex linguist-detectable=false
