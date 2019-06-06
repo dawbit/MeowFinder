@@ -1,2 +1,3 @@
 doc/* linguist-vendored
 article/* linguist-vendored
+*py linguist-vendored=false
