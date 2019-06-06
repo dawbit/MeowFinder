@@ -20,3 +20,6 @@ currentModel
 *.npy
 checkpoint
 *.tfl.*
+
+#tex files
+*.cls
