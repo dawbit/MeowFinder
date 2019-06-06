@@ -1,3 +1,2 @@
-# show the most important programming language
-*.jpg linguist-vendored
-*.tex linguist-vendored
+doc/* linguist-vendored
+article/* linguist-vendored
