@@ -9,9 +9,9 @@ import settings as s
 import os
 
 # tflearn.init_graph(num_cores=4, gpu_memory_fraction=1)
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-session = tf.Session(config=config)
+# config = tf.ConfigProto()
+# config.gpu_options.allow_growth = True
+# session = tf.Session(config=config)
 
 
 def network1(train, train_amount):
